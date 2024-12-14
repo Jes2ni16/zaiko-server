@@ -7,12 +7,7 @@ const clientRoutes = require('./routes/client.route');
 const listRoutes = require('./routes/list.route');
 const cors = require('cors');
 
-
 const app = express();
-
-
-
-
 
 // Middleware
 app.use(bodyParser.json());
@@ -22,11 +17,8 @@ app.use(cors());
 app.use('/api/users', userRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/lists', listRoutes);
+
 // Database Connection
-
-
-
-
 let isConnected = false;
 
 const connectToDatabase = async () => {
@@ -43,8 +35,11 @@ const connectToDatabase = async () => {
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
-    throw new Error('Failed to connect to MongoDB');
+    process.exit(1); // Exit the application if the database connection fails
   }
 };
 
-module.exports = connectToDatabase;
+// Start the server after connecting to the database
+
+
+connectToDatabase();
