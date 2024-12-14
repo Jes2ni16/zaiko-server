@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const userRoutes = require('../routes/user.route');
-const clientRoutes = require('../routes/client.route');
-const listRoutes = require('../routes/list.route');
+const userRoutes = require('./routes/user.route');
+const clientRoutes = require('./routes/client.route');
+const listRoutes = require('./routes/list.route');
 
 const app = express();
 
