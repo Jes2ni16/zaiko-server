@@ -16,6 +16,10 @@ app.use('/api/users', userRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/lists', listRoutes);
 
+
+app.get("/", (req, res) => res.send("Express on Vercel"));
+console.log('App is running');
+
 // Database Connection
 let isConnected = false;
 
