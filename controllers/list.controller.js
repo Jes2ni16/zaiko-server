@@ -4,7 +4,7 @@ const Client = require('../models/client.model'); // Import the Client model (if
 // Create a new List and associate it with a Client
 const createList = async (req, res) => {
   try {
-    const { clientId, list_type, unit_type, city, barangay, room_number, fb_link, list_owner } = req.body;
+    const { clientId, list_type, unit_type, city, barangay,price, room_number, fb_link, list_owner } = req.body;
 
     // Fetch the client by ID
     const client = await Client.findById(clientId);
@@ -21,6 +21,7 @@ const createList = async (req, res) => {
       unit_type,
       city,
       barangay,
+      price,
       room_number,
       fb_link,
       list_owner,

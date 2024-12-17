@@ -14,6 +14,9 @@ city:{
 barangay:{
     type:String
 },
+price:{
+    type:String
+},
 fb_link:{
     type:String
 },
