@@ -71,7 +71,7 @@ const getListById = async (req, res) => {
 
 // Update a specific list by ID
 const updateList = async (req, res) => {
-  const { list_type, unit_type, city, barangay, fb_link, room_number, list_owner, clientId } = req.body;
+  const { list_type, unit_type, city, barangay,price, fb_link, room_number, list_owner, clientId } = req.body;
 
   try {
     // Fetch client details to embed in the list
@@ -86,6 +86,7 @@ const updateList = async (req, res) => {
       unit_type,
       city,
       barangay,
+      price,  
       fb_link,
       room_number,
       list_owner,
