@@ -4,7 +4,7 @@ const Client = require('../models/client.model');
 // Create a new client
 exports.createClient = async (req, res) => {
   try {
-    const { name, email, phone, address,  background ,fb,tiktok, youtube,instagram, backgroundMobile, } = req.body;
+    const { name, email, phone, address,  background ,fb,tiktok, youtube,instagram, backgroundMobile } = req.body;
 
     // Extract the base name (first word before any space) for the URL
     const baseName = name.split(' ')[0].toLowerCase();
@@ -25,8 +25,8 @@ exports.createClient = async (req, res) => {
       phone,
       address,
       fb,tiktok, youtube,instagram, 
-      background: background  || null,
-      background_mobile: backgroundMobile || null, // Use the URL provided or set to null
+      background,
+      background_mobile: backgroundMobile, 
       url, // Save the generated URL
   
     });
