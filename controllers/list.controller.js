@@ -69,20 +69,6 @@ const getListById = async (req, res) => {
   }
 };
 
-const getListByUrl = async (req, res) => {
-  try {
-    const { url } = req.params;
-    const list = await List.findOne({ url: url }).populate('client'); 
-    if (!list) {
-      return res.status(404).json({ message: 'List not found' });
-    }
-    res.status(200).json(list);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
 
 // Update a specific list by ID
 const updateList = async (req, res) => {
@@ -143,5 +129,4 @@ module.exports = {
   getListById,
   updateList,
   deleteList,
-  getListByUrl
 };

@@ -50,6 +50,22 @@ exports.getClients = async (req, res) => {
   }
 };
 
+
+exports.getClientByUrl = async (req, res) => {
+  try {
+    const { url } = req.params;
+    const client = await Client.findOne({ url: url }); 
+    if (!client) {
+      return res.status(404).json({ message: 'Client not found' });
+    }
+    res.status(200).json(client);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 // Get a single client by ID
 exports.getClientById = async (req, res) => {
   try {

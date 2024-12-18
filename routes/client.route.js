@@ -16,7 +16,7 @@ router.get('/', clientController.getClients);
 
 // Route for retrieving a single client by ID
 router.get('/:id', clientController.getClientById);
-
+router.get('/url/:url', clientController.getClientByUrl);
 // Route for updating a client by ID
 router.put('/:id', clientController.updateClient);
 
