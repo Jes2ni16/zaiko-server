@@ -1,11 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const verifyCookie = require('../middlewares/authMiddleware');
-
-const app = express();
-
-app.use(cookieParser());
-const router = express.Router();
 const {
   getAllUsers,
   createUser,
@@ -16,6 +11,11 @@ const {
   logoutUser,
   checkLogin
 } = require('../controllers/user.controller');
+
+const app = express();
+
+app.use(cookieParser());
+const router = express.Router();
 
 router.get('/',verifyCookie, getAllUsers);
 router.post('/',verifyCookie, createUser);

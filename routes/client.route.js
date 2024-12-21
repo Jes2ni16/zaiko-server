@@ -1,19 +1,19 @@
 // routes/client.routes.js
 const express = require('express');
 const router = express.Router();
-const clientController = require('../controllers/client.controller');
+const { getClients, getClientById, getClientByUrl, createClient, updateClient , getClientByUrl} = require('../controllers/client.controller');
 const cookieParser = require('cookie-parser');
 const verifyCookie = require('../middlewares/authMiddleware');
 const app = express();
 
 app.use(cookieParser());
 
-router.post('/',verifyCookie, clientController.createClient);
-router.put('/:id',verifyCookie, clientController.updateClient);
-router.delete('/:id',verifyCookie, clientController.deleteClient);
-router.get('/',verifyCookieclientController.getClients);
-router.get('/:id', clientController.getClientById);
-router.get('/url/:url', clientController.getClientByUrl);
+router.post('/',verifyCookie, createClient);
+router.put('/:id',verifyCookie, updateClient);
+router.delete('/:id',verifyCookie, deleteClient);
+router.get('/',getClients);
+router.get('/:id', getClientById);
+router.get('/url/:url', getClientByUrl);
 
 
 module.exports = router;

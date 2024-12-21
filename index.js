@@ -15,6 +15,7 @@ app.use(
     credentials: true,  // Allow credentials (cookies)
   })
 );
+
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/clients', clientRoutes);

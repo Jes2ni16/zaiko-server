@@ -2,9 +2,9 @@
 const Client = require('../models/client.model');
 
 // Create a new client
-exports.createClient = async (req, res) => {
+const createClient = async (req, res) => {
   try {
-    const { name, email, phone, address,  background ,fb,tiktok, youtube,instagram, background_mobile } = req.body;
+    const { name, email, phone, address, background, fb, tiktok, youtube, instagram, background_mobile } = req.body;
 
     // Extract the base name (first word before any space) for the URL
     const baseName = name.split(' ')[0].toLowerCase();
@@ -24,11 +24,13 @@ exports.createClient = async (req, res) => {
       email,
       phone,
       address,
-      fb,tiktok, youtube,instagram, 
+      fb,
+      tiktok,
+      youtube,
+      instagram,
       background,
-      background_mobile, 
+      background_mobile,
       url, // Save the generated URL
-  
     });
 
     // Save the client in the database
@@ -41,7 +43,7 @@ exports.createClient = async (req, res) => {
 };
 
 // Get all clients
-exports.getClients = async (req, res) => {
+const getClients = async (req, res) => {
   try {
     const clients = await Client.find();
     res.status(200).json(clients);
@@ -50,11 +52,11 @@ exports.getClients = async (req, res) => {
   }
 };
 
-
-exports.getClientByUrl = async (req, res) => {
+// Get client by URL
+const getClientByUrl = async (req, res) => {
   try {
     const { url } = req.params;
-    const client = await Client.findOne({ url: url }); 
+    const client = await Client.findOne({ url: url });
     if (!client) {
       return res.status(404).json({ message: 'Client not found' });
     }
@@ -65,9 +67,8 @@ exports.getClientByUrl = async (req, res) => {
   }
 };
 
-
 // Get a single client by ID
-exports.getClientById = async (req, res) => {
+const getClientById = async (req, res) => {
   try {
     const client = await Client.findById(req.params.id);
     if (!client) {
@@ -80,9 +81,9 @@ exports.getClientById = async (req, res) => {
 };
 
 // Update a client by ID
-exports.updateClient = async (req, res) => {
+const updateClient = async (req, res) => {
   const { id } = req.params;
-  const { name, email, phone, address, background_mobile,  background ,fb, tiktok, youtube, instagram  } = req.body;
+  const { name, email, phone, address, background_mobile, background, fb, tiktok, youtube, instagram } = req.body;
 
   try {
     const client = await Client.findById(id);
@@ -99,9 +100,8 @@ exports.updateClient = async (req, res) => {
     client.tiktok = tiktok;
     client.youtube = youtube;
     client.instagram = instagram;
-      client.background_mobile = background_mobile;
-      client.background = background ; // Save the URL string in the database
-    
+    client.background_mobile = background_mobile;
+    client.background = background;
 
     // Save the updated client information
     await client.save();
@@ -113,7 +113,7 @@ exports.updateClient = async (req, res) => {
 };
 
 // Delete a client by ID
-exports.deleteClient = async (req, res) => {
+const deleteClient = async (req, res) => {
   try {
     const client = await Client.findByIdAndDelete(req.params.id);
     if (!client) {
@@ -123,4 +123,13 @@ exports.deleteClient = async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: 'Error deleting client', details: err.message });
   }
+};
+
+module.exports = {
+  createClient,
+  getClients,
+  getClientByUrl,
+  getClientById,
+  updateClient,
+  deleteClient,
 };
