@@ -13,7 +13,8 @@ const {
   updateUser,
   deleteUser,
   loginUser,
-  logoutUser
+  logoutUser,
+  checkLogin
 } = require('../controllers/user.controller');
 
 router.get('/',verifyCookie, getAllUsers);
@@ -23,5 +24,6 @@ router.put('/:id',verifyCookie, updateUser);
 router.delete('/:id',verifyCookie, deleteUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
+router.post('/me', checkLogin);
 
 module.exports = router;
