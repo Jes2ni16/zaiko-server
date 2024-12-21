@@ -1,9 +1,5 @@
 // routes/client.routes.js
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const Client = require('../models/client.model');
 const router = express.Router();
 const clientController = require('../controllers/client.controller');
 const cookieParser = require('cookie-parser');
