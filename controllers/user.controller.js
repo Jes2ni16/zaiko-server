@@ -153,7 +153,13 @@ const logoutUser = (req, res) => {
 };
 
 const checkLogin = (req, res) => {
-  res.status(200).json({ message:"Logged In"});
+  const authToken = req.cookies.authToken;
+
+  if (!authToken) {
+    return res.status(401).json({ message: "Not logged in" });
+  }
+
+  return res.status(200).json({ message: "Logged In" });
 };
 
 module.exports = {
