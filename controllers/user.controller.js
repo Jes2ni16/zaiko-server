@@ -122,6 +122,7 @@ const loginUser = async (req, res) => {
     // Set the token in an HTTP-only cookie
     res.cookie('auth_token', token, {
       httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+      sameSite: "None",
       secure: process.env.NODE_ENV === 'production', // Use secure cookies in production /
       maxAge: 4 * 60 * 60 * 1000, // Match token expiration time (4 hours)
     });
@@ -139,6 +140,7 @@ const logoutUser = (req, res) => {
     // Clear the 'auth_token' cookie
     res.clearCookie('auth_token', {
       httpOnly: true,
+      sameSite: "None",
       secure: process.env.NODE_ENV === 'production',
     });
 
