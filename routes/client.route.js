@@ -1,7 +1,7 @@
 // routes/client.routes.js
 const express = require('express');
 const router = express.Router();
-const { getClients, getClientById, getClientByUrl, createClient, updateClient , getClientByUrl, deleteClient} = require('../controllers/client.controller');
+const { getClients, getClientById,  createClient, updateClient , getClientByUrl, deleteClient} = require('../controllers/client.controller');
 const cookieParser = require('cookie-parser');
 const verifyCookie = require('../middlewares/authMiddleware');
 const app = express();
