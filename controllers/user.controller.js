@@ -94,6 +94,7 @@ const deleteUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
+  // Check if username and password are provided
   if (!username || !password) {
     return res.status(400).json({ message: 'Username and password are required' });
   }
@@ -102,27 +103,52 @@ const loginUser = async (req, res) => {
     // Check if the user exists
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(401).json({ message: 'Invalid username or password' }); // Generic error message
     }
 
     // Compare the password with the stored hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(401).json({ message: 'Invalid username or password' }); // Generic error message
     }
 
     // Generate a JWT token
     const token = jwt.sign(
       { userId: user._id, username: user.username },
-      process.env.JWT_SECRET, // Use the secret key from environment variables
-      { expiresIn: '4h' }
+      process.env.JWT_SECRET, // Secret key from environment variables
+      { expiresIn: '4h' } // Set token expiration time
     );
 
-    // Send the token as a response
-    res.status(200).json({ message: 'Login successful', token });
+    // Set the token in an HTTP-only cookie
+    res.cookie('auth_token', token, {
+      httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      sameSite: 'strict', // Prevent CSRF attacks
+      maxAge: 4 * 60 * 60 * 1000, // Match token expiration time (4 hours)
+    });
+
+    // Send a success response
+    res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     console.error('Error during login:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'An unexpected error occurred' });
+  }
+};
+
+const logoutUser = (req, res) => {
+  try {
+    // Clear the 'auth_token' cookie
+    res.clearCookie('auth_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+
+    // Send a success response
+    res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error('Error during logout:', error);
+    res.status(500).json({ message: 'An unexpected error occurred' });
   }
 };
 
@@ -133,4 +159,5 @@ module.exports = {
   updateUser,
   deleteUser,
   loginUser,
+  logoutUser
 };
