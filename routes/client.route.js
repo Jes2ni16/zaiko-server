@@ -6,21 +6,17 @@ const fs = require('fs');
 const Client = require('../models/client.model');
 const router = express.Router();
 const clientController = require('../controllers/client.controller');
+const cookieParser = require('cookie-parser');
+const verifyCookie = require('../middlewares/authMiddleware');
+const app = express();
 
+app.use(cookieParser());
 
-// Route for creating a client
-router.post('/', clientController.createClient);
-
-// Route for retrieving all clients
-router.get('/', clientController.getClients);
-
-// Route for retrieving a single client by ID
+router.post('/',verifyCookie, clientController.createClient);
+router.get('/',verifyCookieclientController.getClients);
 router.get('/:id', clientController.getClientById);
 router.get('/url/:url', clientController.getClientByUrl);
-// Route for updating a client by ID
-router.put('/:id', clientController.updateClient);
-
-// Route for deleting a client by ID
-router.delete('/:id', clientController.deleteClient);
+router.put('/:id',verifyCookie, clientController.updateClient);
+router.delete('/:id',verifyCookie, clientController.deleteClient);
 
 module.exports = router;
