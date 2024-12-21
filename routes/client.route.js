@@ -9,10 +9,11 @@ const app = express();
 app.use(cookieParser());
 
 router.post('/',verifyCookie, clientController.createClient);
+router.put('/:id',verifyCookie, clientController.updateClient);
+router.delete('/:id',verifyCookie, clientController.deleteClient);
 router.get('/',verifyCookieclientController.getClients);
 router.get('/:id', clientController.getClientById);
 router.get('/url/:url', clientController.getClientByUrl);
-router.put('/:id',verifyCookie, clientController.updateClient);
-router.delete('/:id',verifyCookie, clientController.deleteClient);
+
 
 module.exports = router;

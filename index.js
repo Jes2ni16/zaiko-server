@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:3000/', 'https://zaicko.vercel.app/'], // Your frontend URL
+    origin: ['http://localhost:3000', 'https://zaicko.vercel.app'], // Your frontend URL
     credentials: true,  // Allow credentials (cookies)
   })
 );
