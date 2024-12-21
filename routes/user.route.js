@@ -24,6 +24,6 @@ router.put('/:id',verifyCookie, updateUser);
 router.delete('/:id',verifyCookie, deleteUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
-router.post('/me', checkLogin);
+router.post('/me', verifyCookie, checkLogin);
 
 module.exports = router;

@@ -153,18 +153,7 @@ const logoutUser = (req, res) => {
 };
 
 const checkLogin = (req, res) => {
-  const authToken = req.cookies.authToken;
-  if (!authToken) {
-    return res.status(401).json({ message: "Not logged in" });
-  }
-
-  // Validate the token/session
-  const user = validateAuthToken(authToken); // Your token validation logic
-  if (!user) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
-
-  res.status(200).json({ user });
+  res.status(200).json({ message:"Logged In"});
 };
 
 module.exports = {
