@@ -4,7 +4,7 @@ const Client = require('../models/client.model');
 // Create a new client
 const createClient = async (req, res) => {
   try {
-    const { name, email, phone, address, background, fb, tiktok, youtube, instagram, background_mobile } = req.body;
+    const { name, email, phone, address, background, fb, tiktok, youtube, instagram, background_mobile, image, image_mobile  } = req.body;
 
     // Extract the base name (first word before any space) for the URL
     const baseName = name.split(' ')[0].toLowerCase();
@@ -30,6 +30,7 @@ const createClient = async (req, res) => {
       instagram,
       background,
       background_mobile,
+      image, image_mobile ,
       url, // Save the generated URL
     });
 
@@ -83,7 +84,7 @@ const getClientById = async (req, res) => {
 // Update a client by ID
 const updateClient = async (req, res) => {
   const { id } = req.params;
-  const { name, email, phone, address, background_mobile, background, fb, tiktok, youtube, instagram } = req.body;
+  const { name, email, phone, address, background_mobile, background, fb, tiktok, youtube, instagram, image, image_mobile } = req.body;
 
   try {
     const client = await Client.findById(id);
@@ -102,6 +103,8 @@ const updateClient = async (req, res) => {
     client.instagram = instagram;
     client.background_mobile = background_mobile;
     client.background = background;
+    client.image = image; 
+    client.image_mobile = image_mobile ; 
 
     // Save the updated client information
     await client.save();

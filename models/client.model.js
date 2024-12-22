@@ -17,9 +17,6 @@ const clientSchema = new Schema({
   address: {
     type: String,
   },
-  background: {
-    type:String,
-  },
   fb: {
     type:String
   },
@@ -32,8 +29,17 @@ const clientSchema = new Schema({
   youtube: {
     type:String,
   },
+  background: {
+    type:String,
+  },
   background_mobile : {
     type:String
+  },
+  image: {
+    type:String,
+  },
+  image_mobile: {
+    type:String,
   },
   url:{
     type:String
