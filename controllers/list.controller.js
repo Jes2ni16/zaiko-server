@@ -47,12 +47,14 @@ const createList = async (req, res) => {
 // Get all lists
 const getAllLists = async (req, res) => {
   try {
-    const { client } = req.query; // Extract the client ID from the query parameter
+    const { clientUrl } = req.query; // Extract the client name from the query parameter
 
-    let filter = {}; // Default filter is empty, meaning no filtering
-    if (client) {
-      filter.client = client; // If a client query is provided, filter by it
+    let filter = {}; // Default filter is empty
+    if (clientUrl) {
+      // Match lists where the client name matches
+      filter = { 'client.url': { $regex: clientUrl, $options: 'i' } }; // Case-insensitive search
     }
+
     const lists = await List.find(filter);
     res.status(200).json(lists);
   } catch (error) {
