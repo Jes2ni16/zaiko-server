@@ -47,7 +47,13 @@ const createList = async (req, res) => {
 // Get all lists
 const getAllLists = async (req, res) => {
   try {
-    const lists = await List.find();
+    const { client } = req.query; // Extract the client ID from the query parameter
+
+    let filter = {}; // Default filter is empty, meaning no filtering
+    if (client) {
+      filter.client = client; // If a client query is provided, filter by it
+    }
+    const lists = await List.find(filter);
     res.status(200).json(lists);
   } catch (error) {
     console.error(error);
