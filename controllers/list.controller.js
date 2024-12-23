@@ -28,6 +28,7 @@ const createList = async (req, res) => {
       client: {
         _id: client._id,
         name: client.name,
+        url: client.url,
       }
     });
 
@@ -100,7 +101,7 @@ const updateList = async (req, res) => {
       client: {
         _id: client._id,
         name: client.name,
-        email: client.email,
+        url: client.url,
       },
     };
 
