@@ -47,14 +47,13 @@ const createList = async (req, res) => {
 // Get all lists
 const getAllLists = async (req, res) => {
   try {
-    const { clientUrl } = req.query; 
+    const { client } = req.query; // Expecting 'client' parameter from the query
 
-    let filter = {}; // Default filter is empty
-    if (clientUrl) {
-      filter = { 'client.url': { $regex: clientUrl, $options: 'i' } }; // Case-insensitive search
-    }
+    const filter = client
+      ? { 'client.url': { $regex: new RegExp(client, 'i') } } // Case-insensitive regex query
+      : {}; // Default filter is empty if no client query
 
-    const lists = await List.find(filter);
+    const lists = await List.find(filter).exec(); // Mongoose query with exec for better error handling
     res.status(200).json(lists);
   } catch (error) {
     console.error(error);
