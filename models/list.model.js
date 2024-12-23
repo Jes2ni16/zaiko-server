@@ -30,6 +30,7 @@ client: {
     _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Client' },
     name: String,
     email: String,
+    url:String,
     // Include any other fields you want to embed here
   }
 },{ timestamps: true });
