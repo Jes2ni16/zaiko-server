@@ -4,21 +4,16 @@ const Client = require('../models/client.model');
 // Create a new client
 const createClient = async (req, res) => {
   try {
-    const { name, email, phone, address, background, fb, tiktok, youtube, instagram, background_mobile, image, image_mobile  } = req.body;
+    const { name, email, phone, address, background, fb, tiktok, youtube, instagram, background_mobile, image, image_mobile, projects } = req.body;
 
-    // Extract the base name (first word before any space) for the URL
     const baseName = name.split(' ')[0].toLowerCase();
 
-    // Find existing clients with a similar URL pattern
     const existingClients = await Client.find({ url: new RegExp(`^${baseName}\\d*$`, 'i') });
 
-    // Determine the next incremental number
     const nextNumber = existingClients.length + 1;
 
-    // Generate the unique URL
     const url = `${baseName}${nextNumber}`;
 
-    // Create a new client with the provided details
     const newClient = new Client({
       name,
       email,
@@ -30,11 +25,11 @@ const createClient = async (req, res) => {
       instagram,
       background,
       background_mobile,
+      projects,
       image, image_mobile ,
-      url, // Save the generated URL
+      url, 
     });
 
-    // Save the client in the database
     const savedClient = await newClient.save();
     res.status(201).json({ message: 'Client created successfully', client: savedClient });
   } catch (err) {
@@ -84,7 +79,7 @@ const getClientById = async (req, res) => {
 // Update a client by ID
 const updateClient = async (req, res) => {
   const { id } = req.params;
-  const { name, email, phone, address, background_mobile, background, fb, tiktok, youtube, instagram, image, image_mobile } = req.body;
+  const { name, email, phone, address, background_mobile, background, fb, tiktok, youtube, instagram, image, image_mobile, projects } = req.body;
 
   try {
     const client = await Client.findById(id);
@@ -92,7 +87,6 @@ const updateClient = async (req, res) => {
       return res.status(404).json({ message: 'Client not found' });
     }
 
-    // Update client fields
     client.name = name;
     client.email = email;
     client.phone = phone;
@@ -104,8 +98,9 @@ const updateClient = async (req, res) => {
     client.background_mobile = background_mobile;
     client.background = background;
     client.image = image; 
-    client.image_mobile = image_mobile ; 
-
+    client.image_mobile = image_mobile; 
+    client.projects = projects; 
+    
     // Save the updated client information
     await client.save();
     res.json({ message: 'Client updated successfully', client });

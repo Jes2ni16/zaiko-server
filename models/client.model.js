@@ -38,6 +38,8 @@ const clientSchema = new Schema({
   image: {
     type:String,
   },
+  projects:
+   { type: [String], default: [] },
   image_mobile: {
     type:String,
   },
