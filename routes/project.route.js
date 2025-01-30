@@ -1,13 +1,12 @@
-import express from 'express';
-
+const express = require('express');
 const router = express.Router();
-import {
+const {
   createProperty,
   getProperties,
   getPropertyById,
   updateProperty,
   deleteProperty,
-} from '../controllers/project.controller';
+}  =require('../controllers/project.controller');
 
 // Route to create a new property
 router.post('/', createProperty);

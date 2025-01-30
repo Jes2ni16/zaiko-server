@@ -1,4 +1,4 @@
-import Property from '../models/project.model';
+const Property = require('../models/project.model');
 
 // Create a new property
 const createProperty = async (req, res) => {
