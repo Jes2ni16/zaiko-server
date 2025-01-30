@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const propertySchema = new mongoose.Schema({
   projectUrl:{
-    type:String
+    type:String,
+    default: ''
   },
   title: { type: String },
   description: { type: String},
