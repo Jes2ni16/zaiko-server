@@ -5,7 +5,7 @@ const propertySchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  projectLocation:{ type: String },
+  projectLocation: { type: String },
   title: { type: String },
   description: { type: String },
   
