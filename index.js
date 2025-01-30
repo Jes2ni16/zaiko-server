@@ -4,6 +4,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/user.route');
 const clientRoutes = require('./routes/client.route');
 const listRoutes = require('./routes/list.route');
+const projectRoutes = require('./routes/project.route');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 app.use('/api/users', userRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/lists', listRoutes);
+app.use('/api/projects', projectRoutes);
 
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
