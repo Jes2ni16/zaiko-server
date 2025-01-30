@@ -8,6 +8,9 @@ const propertySchema = new mongoose.Schema({
   title: { type: String },
   description: { type: String},
   location: {
+    locationText:{
+      type:String
+    },
     description1: {
       title: { type: String },
       ul: [{ type: String }],
