@@ -24,4 +24,4 @@ router.put('/:id', updateProperty);
 // Route to delete a property by ID
 router.delete('/:id', deleteProperty);
 
-export default router;
+module.exports = router;
