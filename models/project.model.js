@@ -5,6 +5,7 @@ const propertySchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  projectImg: { type: String },
   projectLocation: { type: String },
   title: { type: String },
   description: { type: String },
@@ -32,6 +33,17 @@ const propertySchema = new mongoose.Schema({
   },
   
   unitDetails: {
+    text: { type: String },
+    details: [
+      {
+        title: { type: String },
+        ul: [{ type: String }],
+        imgs: [{ type: String }],
+      }
+    ], 
+  },
+
+  unitDeliverable: {
     text: { type: String },
     details: [
       {
