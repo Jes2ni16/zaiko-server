@@ -1,4 +1,6 @@
 import express from 'express';
+
+const router = express.Router();
 import {
   createProperty,
   getProperties,
@@ -6,8 +8,6 @@ import {
   updateProperty,
   deleteProperty,
 } from '../controllers/project.controller';
-
-const router = express.Router();
 
 // Route to create a new property
 router.post('/', createProperty);
