@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const propertySchema = new mongoose.Schema({
-  projcetUrl:{
+  projectUrl:{
     type:String
   },
   title: { type: String },
