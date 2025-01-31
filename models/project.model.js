@@ -43,12 +43,15 @@ const propertySchema = new mongoose.Schema({
     ], 
   },
 
+
   unitDeliverable: {
     text: { type: String },
         ul: [{ type: String }],
         imgs: [{ type: String }],
       },
-
+      floorPlans:{
+        type:[String]
+      },
   
   siteUpdate: {
     title: { type: String },
