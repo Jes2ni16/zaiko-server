@@ -49,7 +49,7 @@ const propertySchema = new mongoose.Schema({
         ul: [{ type: String }],
         imgs: [{ type: String }],
       },
-      floorPlans:{
+      floorPlan:{
         type:[String]
       },
   
