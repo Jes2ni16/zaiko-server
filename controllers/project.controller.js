@@ -21,16 +21,20 @@ const getProperties = async (req, res) => {
   }
 };
 
-// Get a single property by ID
-const getPropertyById = async (req, res) => {
+
+const getPropertyByUrl = async (req, res) => {
   try {
-    const property = await Property.findById(req.params.id);
-    if (!property) {
-      return res.status(404).json({ message: 'Property not found' });
+    const { projectUrl } = req.params;
+    const project = await Project.findOne({ projectUrl });
+    
+    if (!project) {
+      return res.status(404).json({ message: `Project "${projectUrl}" not found` });
     }
-    res.status(200).json(property);
+    
+    res.json(project);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error fetching project:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -63,7 +67,7 @@ const deleteProperty = async (req, res) => {
 export {
   createProperty,
   getProperties,
-  getPropertyById,
+  getPropertyByUrl,
   updateProperty,
   deleteProperty,
 };

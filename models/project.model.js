@@ -53,7 +53,6 @@ const propertySchema = new mongoose.Schema({
     ], 
   },
 
-
   unitDeliverable: {
     text: { type: String },
         ul: [{ type: String }],

@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   createProperty,
   getProperties,
-  getPropertyById,
+  getPropertyByUrl,
   updateProperty,
   deleteProperty,
 }  =require('../controllers/project.controller');
@@ -15,7 +15,7 @@ router.post('/', createProperty);
 router.get('/', getProperties);
 
 // Route to get a single property by ID
-router.get('/:id', getPropertyById);
+router.get('/:id', getPropertyByUrl);
 
 // Route to update a property by ID
 router.put('/:id', updateProperty);
