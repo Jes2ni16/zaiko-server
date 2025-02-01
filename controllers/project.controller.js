@@ -25,7 +25,7 @@ const getProperties = async (req, res) => {
 const getPropertyByUrl = async (req, res) => {
   try {
     const { projectUrl } = req.params;
-    const project = await Project.findOne({ projectUrl });
+    const project = await Property.findOne({ projectUrl });
     
     if (!project) {
       return res.status(404).json({ message: `Project "${projectUrl}" not found` });
