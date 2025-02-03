@@ -22,8 +22,13 @@ const propertySchema = new mongoose.Schema({
   },
   
   projectDetails: {
-    ul: [{ type: String }],
-    imgs: [{ type: String }],
+    descriptions: [
+      {
+        title: { type: String },
+        ul: [{ type: String }],
+        imgs: [{ type: String }],
+      }
+    ],
   },
   
   amenitiesFacilities: {
