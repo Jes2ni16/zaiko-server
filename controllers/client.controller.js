@@ -4,7 +4,7 @@ const Client = require('../models/client.model');
 // Create a new client
 const createClient = async (req, res) => {
   try {
-    const { name, email, phone, address, background, fb, tiktok, youtube, instagram, background_mobile, image, image_mobile, projects } = req.body;
+    const { name, email, phone, address, background, fb, tiktok, youtube,website, instagram, background_mobile, image, image_mobile, projects } = req.body;
 
     const baseName = name.split(' ')[0].toLowerCase();
 
@@ -22,6 +22,7 @@ const createClient = async (req, res) => {
       fb,
       tiktok,
       youtube,
+      website,
       instagram,
       background,
       background_mobile,
@@ -79,7 +80,7 @@ const getClientById = async (req, res) => {
 // Update a client by ID
 const updateClient = async (req, res) => {
   const { id } = req.params;
-  const { name, email, phone, address, background_mobile, background, fb, tiktok, youtube, instagram, image, image_mobile, projects } = req.body;
+  const { name, email, phone, address, background_mobile, background, fb, tiktok,website, youtube, instagram, image, image_mobile, projects } = req.body;
 
   try {
     const client = await Client.findById(id);
@@ -92,6 +93,7 @@ const updateClient = async (req, res) => {
     client.phone = phone;
     client.address = address;
     client.fb = fb;
+    client.website = website;
     client.tiktok = tiktok;
     client.youtube = youtube;
     client.instagram = instagram;

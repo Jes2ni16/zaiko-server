@@ -29,6 +29,9 @@ const clientSchema = new Schema({
   youtube: {
     type:String,
   },
+  website: {
+    type:String,
+  },
   background: {
     type:String,
   },
