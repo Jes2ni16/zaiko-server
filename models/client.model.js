@@ -32,6 +32,9 @@ const clientSchema = new Schema({
   website: {
     type:String,
   },
+  linked: {
+    type:String,
+  },
   background: {
     type:String,
   },
