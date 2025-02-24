@@ -81,7 +81,7 @@ const getClientById = async (req, res) => {
 // Update a client by ID
 const updateClient = async (req, res) => {
   const { id } = req.params;
-  const { name, email, phone, address, background_mobile, background, fb, tiktok,website, youtube, instagram, image, image_mobile, projects } = req.body;
+  const { name, email, phone, address, background_mobile, background, fb,linked, tiktok,website, youtube, instagram, image, image_mobile, projects } = req.body;
 
   try {
     const client = await Client.findById(id);
