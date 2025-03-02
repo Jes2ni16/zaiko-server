@@ -1,26 +1,13 @@
+// routes/propertyRoutes.js
 const express = require('express');
 const router = express.Router();
-const {
-  createProperty,
-  getProperties,
-  getPropertyByUrl,
-  updateProperty,
-  deleteProperty,
-}  =require('../controllers/project.controller');
+const propertyController = require('../controllers/propertyController');
 
-// Route to create a new property
-router.post('/', createProperty);
 
-// Route to get all properties
-router.get('/', getProperties);
-
-// Route to get a single property by ID
-router.get('/:projectUrl', getPropertyByUrl);
-
-// Route to update a property by ID
-router.put('/:id', updateProperty);
-
-// Route to delete a property by ID
-router.delete('/:id', deleteProperty);
+router.post('/', propertyController.createProperty);
+router.get('/', propertyController.getAllProperties);
+router.get('/:id', propertyController.getPropertyById);
+router.put('/:id', propertyController.updateProperty);
+router.delete('/:id', propertyController.deleteProperty);
 
 module.exports = router;

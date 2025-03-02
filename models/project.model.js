@@ -5,8 +5,80 @@ const propertySchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-projectDocuments: {
-  type: String,
+  projectName:{
+    type:String
+      },
+  description:{
+type:String
+  },
+  image:{
+    type:[String]
+      },
+location: {
+  description:{
+    type:String,
+  },
+  list:{
+    type:[String],
+  },
+  images:{
+    type:[String]
+  }
+},
+amenities: {
+  description:{
+    type:String,
+  },
+  list:{
+    type:[String],
+  },
+  images:{
+    type:[String]
+  }
+},
+building: {
+  description:{
+    type:String,
+  },
+  list:{
+    type:[String],
+  },
+  images:{
+    type:[String]
+  }
+},
+house_models: {
+  description:{
+    type:String,
+  },
+  list:{
+    type:[String],
+  },
+  images:{
+    type:[String]
+  }
+},
+sample_computation: {
+  description:{
+    type:String,
+  },
+  list:{
+    type:[String],
+  },
+  images:{
+    type:[String]
+  }
+},
+deliverables: {
+  description:{
+    type:String,
+  },
+  list:{
+    type:[String],
+  },
+  images:{
+    type:[String]
+  }
 }
 });
 
