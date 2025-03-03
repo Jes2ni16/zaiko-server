@@ -8,7 +8,6 @@ const projectRoutes = require('./routes/project.route');
 
 const app = express();
 
-app.options('*', cors()); 
 
 // Middleware
 app.use(express.json());
