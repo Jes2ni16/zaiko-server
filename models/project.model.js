@@ -80,9 +80,17 @@ deliverables: {
     type:[String]
   }
 },
-requirements:{
-  type:[String],
-}
+requirements: {
+  description:{
+    type:String,
+  },
+  list:{
+    type:[String],
+  },
+  images:{
+    type:[String]
+  }
+},
 }, { timestamps: true });
 
 const Property = mongoose.model('Property', propertySchema);
