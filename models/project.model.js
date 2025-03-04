@@ -79,6 +79,9 @@ deliverables: {
   images:{
     type:[String]
   }
+},
+requirements:{
+  type:[String],
 }
 }, { timestamps: true });
 
