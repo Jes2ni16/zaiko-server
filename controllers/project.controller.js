@@ -42,6 +42,115 @@ const createProperty = async (req, res) => {
       image: uploadedImageUrls,  // Save the image URLs in `image` field
     };
 
+
+
+    // Handle nested image arrays (e.g., `location.images`, `amenities.images`, etc.)
+    if (req.files.location && req.files.location.length > 0) {
+      const locationImages = req.files.location.map((image) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: 'properties/location' },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result.secure_url);
+            }
+          ).end(image.buffer);
+        });
+      });
+      propertyData.location.images = await Promise.all(locationImages);
+    }
+
+    if (req.files.amenities && req.files.amenities.length > 0) {
+      const amenitiesImages = req.files.amenities.map((image) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: 'properties/amenities' },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result.secure_url);
+            }
+          ).end(image.buffer);
+        });
+      });
+      propertyData.amenities.images = await Promise.all(amenitiesImages);
+    }
+
+    if (req.files.building && req.files.building.length > 0) {
+      const buildingImages = req.files.building.map((image) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: 'properties/building' },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result.secure_url);
+            }
+          ).end(image.buffer);
+        });
+      });
+      propertyData.building.images = await Promise.all(buildingImages);
+    }
+
+    if (req.files.house_models && req.files.house_models.length > 0) {
+      const houseModelsImages = req.files.house_models.map((image) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: 'properties/house_models' },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result.secure_url);
+            }
+          ).end(image.buffer);
+        });
+      });
+      propertyData.house_models.images = await Promise.all(houseModelsImages);
+    }
+
+    if (req.files.sample_computation && req.files.sample_computation.length > 0) {
+      const sampleComputationImages = req.files.sample_computation.map((image) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: 'properties/sample_computation' },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result.secure_url);
+            }
+          ).end(image.buffer);
+        });
+      });
+      propertyData.sample_computation.images = await Promise.all(sampleComputationImages);
+    }
+
+    if (req.files.deliverables && req.files.deliverables.length > 0) {
+      const deliverablesImages = req.files.deliverables.map((image) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: 'properties/deliverables' },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result.secure_url);
+            }
+          ).end(image.buffer);
+        });
+      });
+      propertyData.deliverables.images = await Promise.all(deliverablesImages);
+    }
+
+    if (req.files.requirements && req.files.requirements.length > 0) {
+      const requirementsImages = req.files.requirements.map((image) => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream(
+            { folder: 'properties/requirements' },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result.secure_url);
+            }
+          ).end(image.buffer);
+        });
+      });
+      propertyData.requirements.images = await Promise.all(requirementsImages);
+    }
+
+
     const property = new Property(propertyData);
     await property.save();
 
