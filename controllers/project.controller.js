@@ -6,9 +6,8 @@ const cloudinary = require('../config/cloudinary');
 // Create a new property
 const createProperty = async (req, res) => {
   try {
-    // Log the incoming request data
-    console.log('Request Body:', req.body); // Log body data
-    console.log('Uploaded Files:', req.files); // Log files to see if they are coming through
+    console.log('Request Body:', req.body);
+    console.log('Uploaded Files:', req.files);
 
     // Ensure files exist
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -20,7 +19,7 @@ const createProperty = async (req, res) => {
     // Upload general property images (main image)
     if (req.files.image) {
       const images = req.files.image;
-
+      
       const uploadPromises = Array.isArray(images)
         ? images.map((image) => {
             return new Promise((resolve, reject) => {
@@ -44,11 +43,10 @@ const createProperty = async (req, res) => {
           })];
 
       const uploadedImageUrls = await Promise.all(uploadPromises);
-      console.log('Uploaded Image URLs:', uploadedImageUrls);
-
       imageUrls.push(...uploadedImageUrls); // Add the uploaded image URLs to the property data
     }
 
+    // Initialize property data
     const propertyData = {
       ...req.body,
       image: imageUrls,  // Save the image URLs in `image` field
@@ -66,8 +64,8 @@ const createProperty = async (req, res) => {
     ];
 
     for (let field of fieldsWithImages) {
-      if (req.files[field]) {
-        const fieldImages = req.files[field];
+      if (req.files[`${field}.images`]) {
+        const fieldImages = req.files[`${field}.images`]; // access the nested images array
 
         const uploadPromises = Array.isArray(fieldImages)
           ? fieldImages.map((image) => {
@@ -115,11 +113,10 @@ const createProperty = async (req, res) => {
       property,
     });
   } catch (error) {
-    console.error('Error creating property:', error); // Log errors for debugging
+    console.error('Error creating property:', error);
     res.status(500).json({ message: 'Error creating property', error: error.message });
   }
 };
-
 
 // Get all properties
 const getAllProperties = async (req, res) => {
