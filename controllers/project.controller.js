@@ -15,7 +15,6 @@ const createProperty = async (req, res) => {
       return res.status(400).json({ message: 'No files uploaded' });
     }
 
-    // Initialize image URLs array for main images
     const imageUrls = [];
 
     // Upload general property images (main image)
@@ -31,7 +30,7 @@ const createProperty = async (req, res) => {
                   if (error) reject(error);
                   else resolve(result.secure_url); // Resolve with Cloudinary URL
                 }
-              ).end(image.data); // Ensure you access the file data properly
+              ).end(image.buffer); // Use .buffer for memory storage
             });
           })
         : [new Promise((resolve, reject) => {
@@ -41,18 +40,15 @@ const createProperty = async (req, res) => {
                 if (error) reject(error);
                 else resolve(result.secure_url);
               }
-            ).end(images.data); // Handle single image case
+            ).end(images.buffer); // Handle single image case
           })];
 
-      // Wait for the image uploads to finish and gather URLs
       const uploadedImageUrls = await Promise.all(uploadPromises);
       console.log('Uploaded Image URLs:', uploadedImageUrls);
 
-      // Add the uploaded image URLs to the property data
-      imageUrls.push(...uploadedImageUrls);
+      imageUrls.push(...uploadedImageUrls); // Add the uploaded image URLs to the property data
     }
 
-    // Initialize property data
     const propertyData = {
       ...req.body,
       image: imageUrls,  // Save the image URLs in `image` field
@@ -73,7 +69,6 @@ const createProperty = async (req, res) => {
       if (req.files[field]) {
         const fieldImages = req.files[field];
 
-        // Upload the images for the nested fields
         const uploadPromises = Array.isArray(fieldImages)
           ? fieldImages.map((image) => {
               return new Promise((resolve, reject) => {
@@ -83,7 +78,7 @@ const createProperty = async (req, res) => {
                     if (error) reject(error);
                     else resolve(result.secure_url);
                   }
-                ).end(image.data);
+                ).end(image.buffer); // Use .buffer for memory storage
               });
             })
           : [new Promise((resolve, reject) => {
@@ -93,17 +88,21 @@ const createProperty = async (req, res) => {
                   if (error) reject(error);
                   else resolve(result.secure_url);
                 }
-              ).end(fieldImages.data);
+              ).end(fieldImages.buffer);
             })];
 
         // Wait for the uploads and store the URLs in the respective field
         const uploadedFieldUrls = await Promise.all(uploadPromises);
 
         // Ensure each field has its own structure (description, list, images)
-        propertyData[field] = {
-          ...(propertyData[field] || {}),
-          images: uploadedFieldUrls, // Add image URLs for the nested field
-        };
+        if (propertyData[field]) {
+          propertyData[field].images = uploadedFieldUrls; // Update images for that field
+        } else {
+          // If the field doesn't exist, initialize it
+          propertyData[field] = {
+            images: uploadedFieldUrls,
+          };
+        }
       }
     }
 
@@ -120,6 +119,8 @@ const createProperty = async (req, res) => {
     res.status(500).json({ message: 'Error creating property', error: error.message });
   }
 };
+
+
 // Get all properties
 const getAllProperties = async (req, res) => {
   try {
