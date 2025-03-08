@@ -15,13 +15,14 @@ const createProperty = async (req, res) => {
       return res.status(400).json({ message: 'No files uploaded' });
     }
 
+    // Initialize image URLs array for main images
     const imageUrls = [];
 
     // Upload general property images (main image)
     if (req.files.image) {
       const images = req.files.image;
 
-      const uploadPromises = Array.isArray(images) 
+      const uploadPromises = Array.isArray(images)
         ? images.map((image) => {
             return new Promise((resolve, reject) => {
               cloudinary.uploader.upload_stream(
@@ -51,6 +52,7 @@ const createProperty = async (req, res) => {
       imageUrls.push(...uploadedImageUrls);
     }
 
+    // Initialize property data
     const propertyData = {
       ...req.body,
       image: imageUrls,  // Save the image URLs in `image` field
@@ -70,6 +72,8 @@ const createProperty = async (req, res) => {
     for (let field of fieldsWithImages) {
       if (req.files[field]) {
         const fieldImages = req.files[field];
+
+        // Upload the images for the nested fields
         const uploadPromises = Array.isArray(fieldImages)
           ? fieldImages.map((image) => {
               return new Promise((resolve, reject) => {
@@ -94,9 +98,11 @@ const createProperty = async (req, res) => {
 
         // Wait for the uploads and store the URLs in the respective field
         const uploadedFieldUrls = await Promise.all(uploadPromises);
+
+        // Ensure each field has its own structure (description, list, images)
         propertyData[field] = {
-          ...propertyData[field],  // Retain existing field data
-          images: uploadedFieldUrls,  // Add image URLs
+          ...(propertyData[field] || {}),
+          images: uploadedFieldUrls, // Add image URLs for the nested field
         };
       }
     }
