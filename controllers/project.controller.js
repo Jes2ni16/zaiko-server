@@ -6,6 +6,7 @@ const cloudinary = require('../config/cloudinary');
 // Create a new property
 const createProperty = async (req, res) => {
   try {
+    // Log the incoming request data
     console.log('Request Body:', req.body); // Log body data
     console.log('Uploaded Files:', req.files); // Log files to see if they are coming through
 
@@ -36,13 +37,11 @@ const createProperty = async (req, res) => {
     const uploadedImageUrls = await Promise.all(uploadPromises);
     console.log('Uploaded Image URLs:', uploadedImageUrls); // Log the URLs returned by Cloudinary
 
-    // Save property data, including image URLs
+    // Prepare the data for saving to MongoDB
     const propertyData = {
       ...req.body,
       image: uploadedImageUrls,  // Save the image URLs in `image` field
     };
-
-
 
     // Handle nested image arrays (e.g., `location.images`, `amenities.images`, etc.)
     if (req.files.location && req.files.location.length > 0) {
@@ -150,7 +149,7 @@ const createProperty = async (req, res) => {
       propertyData.requirements.images = await Promise.all(requirementsImages);
     }
 
-
+    // Save property to database
     const property = new Property(propertyData);
     await property.save();
 
